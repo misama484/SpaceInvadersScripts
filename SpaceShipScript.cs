@@ -9,6 +9,7 @@ public class SpaceShipScript : MonoBehaviour
     public int forceTorpedo;
     Rigidbody2D myRB;
     public GameObject torpedo;
+    public int contador = 0;
     
     void Start()
     {
@@ -39,7 +40,8 @@ public class SpaceShipScript : MonoBehaviour
         transform.position = new Vector2(xPos, yPos);
 
         //GESTIONAMOS DISPARO
-        if (Input.GetButton("Jump"))
+        
+        if (Input.GetButton("Jump") && contador < 1)
         {
             //al presional "jump, creamos la posicion inicial del torpedo, la misma que la nave + 1.5
             Vector2 posTorpedo = new Vector2(transform.position.x, transform.position.y + 1.5f);
@@ -56,7 +58,14 @@ public class SpaceShipScript : MonoBehaviour
 
             //cloneRB.AddForce(direccion * forceTorpedo);
             misilRB.velocity = direccion * forceTorpedo;
-        }
+
+            contador = 1; //al poner el contador a uno, ya no entra en el if
+
+        }    
+            
+        
+
+        
 
         //CODIGO MUESTRA
         /*
@@ -69,5 +78,10 @@ public class SpaceShipScript : MonoBehaviour
             transform.Translate(movement, 0, 0);
         }
         */
+    }
+
+    private void onCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("He chocado!!!!");
     }
 }
