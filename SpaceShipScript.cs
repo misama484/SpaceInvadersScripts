@@ -62,26 +62,21 @@ public class SpaceShipScript : MonoBehaviour
             contador = 1; //al poner el contador a uno, ya no entra en el if
 
         }    
-            
-        
-
-        
-
-        //CODIGO MUESTRA
-        /*
-        //input.getAxis captura las pulsaciones de las teclas de direccion, horizontal y vertical,
-        //modificables desde Edit/projectSettings/inputManager
-        float movement = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-
-        if (movement != 0)
-        {
-            transform.Translate(movement, 0, 0);
-        }
-        */
+    
     }
 
-    private void onCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("He chocado!!!!");
+        contador = 0;
+
     }
+
+    public void SetDisparo() //al ser llamada por el torpedo al pasar la zona de disparo, permitira disparar de nuevo
+    {
+        contador = 0;
+    }
+
+
+
+    
 }
