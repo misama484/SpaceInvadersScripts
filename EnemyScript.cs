@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+    //booleana que indicara cuando ha llegado al limite de la pantalla, para volver.
+    bool mueveDerecha = true;
+    //inidica el tiempo que pasa para iniciar el movimiento lateral de nuevo(corrutina)
+    float sleep = 0.5f;
   
     void Start()
     {
         //ejecuta la funcion moveEnemy a los 0.5 segundos, y lo repite cada 0.5 segs.
         //InvokeRepeating("moveEnemy", 0.5f, 0.5f);
 
-        //Con corrutinas:
-        if(transform.position.x == 5.0f)
-        {
-            StartCoroutine(WaitLeft());
-        }
-        else if(transform.position.x == -0.5f)
-        {
-            StartCoroutine(WaitRigth());
-        }
-        
+        //Con corrutinas:        
+            StartCoroutine(Wait());       
     }
 
     
@@ -28,30 +24,41 @@ public class EnemyScript : MonoBehaviour
         
     }
 
-    IEnumerator WaitRigth()
-    {   
-        //esperara 0.8s
-        yield return new WaitForSeconds(0.8f);
-        moveEnemyRigth();              
-        //vuelve a empezar
-        StartCoroutine(WaitRigth());
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(sleep);
+        MoveEnemy();
+        StartCoroutine(Wait());
     }
 
-    IEnumerator WaitLeft()
+   void MoveEnemy()
     {
-        yield return new WaitForSeconds(0.8f);
-        moveEnemyLeft();
-        StartCoroutine(WaitLeft());
-    }
-
-    void moveEnemyRigth()
-    {
-        //movera el enemigo un punto a la derecha
-        transform.Translate(Vector3.right);
-    }
-    void moveEnemyLeft()
-    {
-        //movera el enemigo un punto a la izquierda
-        transform.Translate(Vector3.left);
+        if (mueveDerecha)
+        {            
+            if(transform.position.x < 6.5)
+            {
+                sleep -= 0.005f;    //restamos tiempo a la corrutina cuando llegue al limite de pantalla, para aumentar velocidad
+                mueveDerecha = false;
+                transform.Translate(Vector3.down);  //bajamos una linea los enemigos
+            }
+            else
+            {
+                transform.Translate(Vector3.right); //movemos a la derecha
+            }
+        }
+        else
+        {
+            
+            if(transform.position.x > -6.5)
+            {
+                sleep -= 0.005f;
+                mueveDerecha =true;
+                transform.Translate(Vector3.down);
+            }
+            else
+            {
+                transform.Translate(Vector3.left);
+            }
+        }
     }
 }
