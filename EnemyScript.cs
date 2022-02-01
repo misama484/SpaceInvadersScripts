@@ -10,6 +10,10 @@ public class EnemyScript : MonoBehaviour
     float sleep = 0.5f;
 
     GameObject player;
+    GameObject youWin;
+    GameObject spaceShip;
+    SpaceShipScript spaceShipScript;
+
   
     void Start()
     {
@@ -17,7 +21,13 @@ public class EnemyScript : MonoBehaviour
         //InvokeRepeating("moveEnemy", 0.5f, 0.5f);
 
         //Con corrutinas:        
-            StartCoroutine(Wait());       
+            StartCoroutine(Wait());
+
+        youWin = GameObject.FindGameObjectWithTag("YouWin");
+        youWin.SetActive(false);
+
+        spaceShip = GameObject.FindGameObjectWithTag("SpaceShip");
+        spaceShipScript = spaceShip.GetComponent<SpaceShipScript>();
         
     }
 
@@ -27,7 +37,7 @@ public class EnemyScript : MonoBehaviour
         
     }
 
-    IEnumerator Wait()
+    public IEnumerator Wait()
     {
         yield return new WaitForSeconds(sleep);
         MoveEnemy();
@@ -69,7 +79,12 @@ public class EnemyScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "Rocket")    //de este modo solo interactua con el GO con el tag "Rocket"
         {
+            //destruimos enemigo
             Destroy(gameObject);
+            //activamos el cartel
+            youWin.SetActive(true);
+            //al poner el contador a 1, evitamos que pueda volver a disparar
+            spaceShipScript.contador = 1;
         }
         
         

@@ -12,13 +12,18 @@ public class SpaceShipScript : MonoBehaviour
     public int contador = 0;
     GameObject gameOver;
     GameObject Enemy;
+    GameObject youWin;
+    EnemyScript enemyScript;
     
     void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
         gameOver = GameObject.FindGameObjectWithTag("GameOver");
         gameOver.SetActive(false);
+        //youWin = GameObject.FindGameObjectWithTag("YouWin");
+        //youWin.SetActive(false);
         Enemy = GameObject.FindGameObjectWithTag("Enemy");
+        enemyScript = Enemy.GetComponent<EnemyScript>();
     }
 
     
@@ -78,8 +83,9 @@ public class SpaceShipScript : MonoBehaviour
             gameOver.SetActive(true);
             //Destroy(gameObject);
             gameObject.SetActive(false);
-            //acceder al enemigo y hacer que no se mueva, parando la corrutina??
-            Enemy.SetActive(false);
+            //acceder al enemigo y hacer que no se mueva, parando la corrutina            
+            enemyScript.StopAllCoroutines();
+
      
             
         }
