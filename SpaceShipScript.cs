@@ -10,10 +10,15 @@ public class SpaceShipScript : MonoBehaviour
     Rigidbody2D myRB;
     public GameObject torpedo;
     public int contador = 0;
+    GameObject gameOver;
+    GameObject Enemy;
     
     void Start()
     {
-        myRB = GetComponent<Rigidbody2D>(); 
+        myRB = GetComponent<Rigidbody2D>();
+        gameOver = GameObject.FindGameObjectWithTag("GameOver");
+        gameOver.SetActive(false);
+        Enemy = GameObject.FindGameObjectWithTag("Enemy");
     }
 
     
@@ -65,18 +70,29 @@ public class SpaceShipScript : MonoBehaviour
     
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         contador = 0;
-
+       if(collision.gameObject.tag == "Enemy")
+        {
+            gameOver.SetActive(true);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
+            //acceder al enemigo y hacer que no se mueva, parando la corrutina??
+            Enemy.SetActive(false);
+     
+            
+        }
     }
 
     public void SetDisparo() //al ser llamada por el torpedo al pasar la zona de disparo, permitira disparar de nuevo
     {
         contador = 0;
-    }
-
-
+    }                         
 
     
+
+
+
+
 }

@@ -8,6 +8,8 @@ public class EnemyScript : MonoBehaviour
     bool mueveDerecha = true;
     //inidica el tiempo que pasa para iniciar el movimiento lateral de nuevo(corrutina)
     float sleep = 0.5f;
+
+    GameObject player;
   
     void Start()
     {
@@ -16,6 +18,7 @@ public class EnemyScript : MonoBehaviour
 
         //Con corrutinas:        
             StartCoroutine(Wait());       
+        
     }
 
     
@@ -68,6 +71,7 @@ public class EnemyScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
         
     }
 }
